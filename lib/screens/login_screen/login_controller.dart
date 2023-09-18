@@ -61,8 +61,13 @@ class LoginController extends GetxController {
         emailController.clear();
         passwordController.clear();
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("invalid creadential")));
+        if (email != emailController.text) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("invalid email")));
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("invalid password")));
+        }
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
