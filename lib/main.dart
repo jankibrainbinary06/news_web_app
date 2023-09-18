@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:news_web_app/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:news_web_app/screens/login_screen/login_screen.dart';
 
-import 'demo.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: const DashBoardScreen(),
     );
   }
 }

@@ -456,10 +456,12 @@ class CategoryScreen extends StatelessWidget {
                                                         ),
                                                         GestureDetector(
                                                           onTap: () {
+                                                            dashboardController.isCategory = false;
+                                                            dashboardController.isNews = true;
+                                                            dashboardController.isNewsCategory = false ;
                                                             dashboardController
                                                                 .update(
                                                                 ['dash']);
-
                                                             Get.back();
                                                           },
                                                           child: Container(

@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:news_web_app/common/text_styles.dart';
 import 'package:news_web_app/screens/dashboard_screen/dashboard_controller.dart';
 import 'package:news_web_app/utils/assets_res.dart';
 import 'package:news_web_app/utils/color_res.dart';
@@ -21,601 +23,749 @@ class NewsScreen extends StatelessWidget {
     bool isMobile = false;
 
     return Expanded(
-      child: ResponsiveBuilder(
-          builder: (context, sizingInformation) {
-            if (sizingInformation.isDesktop) {
-              isMobile = false;
-              width = 250;
-              height = 600;
-              textHeight = 640;
-              border = 1;
-            } else if (sizingInformation.isTablet) {
-              isMobile = false;
-              width = 200;
-              height = 690;
-              textHeight = 600;
-              border = 1;
-            } else if (sizingInformation.isMobile) {
-              isMobile = true;
-              width = 150;
-              height = 600;
-              textHeight = 550;
-              border = 1;
-            }
-            return Container(
-              margin: EdgeInsets.symmetric(horizontal: width * 0.15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+      child: ResponsiveBuilder(builder: (context, sizingInformation) {
+        if (sizingInformation.isDesktop) {
+          isMobile = false;
+          width = 250;
+          height = 600;
+          textHeight = 640;
+          border = 1;
+        } else if (sizingInformation.isTablet) {
+          isMobile = false;
+          width = 200;
+          height = 690;
+          textHeight = 600;
+          border = 1;
+        } else if (sizingInformation.isMobile) {
+          isMobile = true;
+          width = 150;
+          height = 600;
+          textHeight = 550;
+          border = 1;
+        }
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: width * 0.15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SizedBox(
+                height: Get.height * 0.08,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    height: Get.height * 0.08,
+                  Visibility(
+                    visible: Get.width <= 818,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: width * 0.1,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              dashboardController.isTapCategory = false;
+                              dashboardController.update(['dash']);
+                            },
+                            child: Icon(
+                              Icons.arrow_back_sharp,
+                              size: 30,
+                              color: Colors.black.withOpacity(0.8),
+                            )),
+                      ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Visibility(
-                        visible: Get.width <= 818,
+                  Visibility(
+                    visible: Get.width <= 818,
+                    child: GestureDetector(
+                      onTap: () {
+                        dashboardController.scaffoldKey.currentState
+                            ?.openDrawer();
+                      },
+                      child: Container(
+                        height: sizingInformation.isDesktop ? 50 : 40,
+                        width: width * 0.7,
+                        decoration: BoxDecoration(
+                          color: ColorRes.appColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(width: width * 0.1,),
-                            GestureDetector(
-                                onTap: () {
-                                  dashboardController.isTapCategory = false;
-                                  dashboardController.update(['dash']);
-                                },
-                                child: Icon(Icons.arrow_back_sharp, size: 30,
-                                  color: Colors.black.withOpacity(0.8),)),
+                            Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Menu",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            )
                           ],
                         ),
                       ),
-                      Visibility(
-                        visible: Get.width <= 818,
-                        child: GestureDetector(
-                          onTap: () {
-                            dashboardController
-                                .scaffoldKey.currentState
-                                ?.openDrawer();
-                          },
-                          child: Container(
-                            height:
-                            sizingInformation.isDesktop ? 50 : 40,
-                            width: width * 0.7,
-                            decoration: BoxDecoration(
-                              color: ColorRes.appColor,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.menu, color: Colors.white,),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Menu",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return BackdropFilter(
-                                filter: ImageFilter.blur(
-                                    sigmaX: 2, sigmaY: 2),
-                                child: Dialog(
-                                  backgroundColor:
-                                  Colors.transparent,
-                                  child: Container(
-                                    height: height * 0.55,
-                                    width: width * 2,
-                                    padding: const EdgeInsets
-                                        .symmetric(
-                                      vertical: 10,
-                                      horizontal: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        color: ColorRes.appColor,
-                                        width: 1,
+                    ),
+                  ),
+                  dashboardController.isNewsAdded ?
+                  Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        dashboardController.editHeadlineC.text = dashboardController.headline!;
+                        dashboardController.editChannelC.text = dashboardController.channel!;
+                        dashboardController.editTimeC.text = dashboardController.time!;
+                        dashboardController.editDateC.text = dashboardController.date!;
+                        dashboardController.editCityC.text = dashboardController.city!;
+                        dashboardController.editStateC.text = dashboardController.state!;
+                        dashboardController.editDesC.text = dashboardController.description!;
+                        dashboardController.editTopicC.text = dashboardController.topic!;
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return StatefulBuilder(
+                              builder: (context, updateDialog) {
+                                return BackdropFilter(
+                                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                                  child: Dialog(
+                                    backgroundColor: Colors.transparent,
+                                    child: Container(
+                                      // height: height * 0.55,
+                                      width: width * 2,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 10,
                                       ),
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                        5,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 2,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .end,
-                                          children: [
-                                            GestureDetector(
-                                              child: Icon(
-                                                Icons.close,
-                                                color: Colors
-                                                    .black.withOpacity(0.8),
-                                                size: 20,
-                                              ),
-                                              onTap: () {
-                                                Get.back();
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          'Add category',
-                                          style: TextStyle(
-                                              height: 1.5,
-                                              color:
-                                              Colors.black.withOpacity(0.8),
-                                              fontWeight:
-                                              FontWeight
-                                                  .w600,
-                                              fontSize:
-                                              textHeight *
-                                                  0.04,
-                                              fontFamily:
-                                              "sfPro",
-                                              letterSpacing: 2),
-                                        ),
-                                        SizedBox(
-                                          height: Get.height *
-                                              0.008,
-                                        ),
-                                        Container(
-                                          height: 1,
-                                          width: width * 0.8,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(
                                           color: ColorRes.appColor,
+                                          width: 1,
                                         ),
-                                        SizedBox(
-                                          height:
-                                          Get.height * 0.04,
+                                        borderRadius: BorderRadius.circular(
+                                          5,
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment
-                                              .start,
-                                          children: [
-
-                                            SizedBox(
-                                              height:
-                                              Get.height *
-                                                  0.02,
-                                            ),
-                                            Container(
-
-                                              height:
-                                              height * 0.06,
-                                              width:
-                                              width * 1.3,
-                                              decoration:
-                                              BoxDecoration(
-                                                color: ColorRes.appColor
-                                                    .withOpacity(0.1),
-                                                borderRadius:
-
-                                                BorderRadius
-                                                    .circular(
-                                                  5,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 2,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                            children: [
+                                              GestureDetector(
+                                                child: Icon(
+                                                  Icons.close,
+                                                  color:
+                                                  Colors.black.withOpacity(0.8),
+                                                  size: 20,
                                                 ),
-                                                border:
-                                                Border.all(
-                                                    color: ColorRes.appColor
-                                                    ,
-                                                    width:
-                                                    border),
+                                                onTap: () {
+                                                  Get.back();
+                                                },
                                               ),
-                                              child: TextField(
-                                                controller: dashboardController
-                                                    .categoryController,
-                                                style:
-                                                TextStyle(
-                                                  fontFamily:
-                                                  "sfPro",
-                                                  color: Colors
-                                                      .black.withOpacity(0.8),
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w500,
+                                            ],
+                                          ),
+                                          Text(
+                                            'Edit News detail',
+                                            style: TextStyle(
+                                                height: 1.5,
+                                                color:
+                                                Colors.black.withOpacity(0.8),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: textHeight * 0.04,
+                                                fontFamily: "sfPro",
+                                                letterSpacing: 2),
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.008,
+                                          ),
+                                          Container(
+                                            height: 1,
+                                            width: width * 0.8,
+                                            color: ColorRes.appColor,
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.04,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: Get.height * 0.02,
+                                              ),
+                                              dashboardController
+                                                  .newsImage == null ? const SizedBox(): Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    10,
+                                                  ),
+                                                  border: Border.all(
+                                                      color: Colors.white,
+                                                      width: 1),
                                                 ),
-                                                decoration:
-                                                InputDecoration(
-                                                  border:
-                                                  InputBorder
-                                                      .none,
-                                                  contentPadding:
-                                                  EdgeInsets
-                                                      .only(
-                                                    left: width *
-                                                        0.08,
-                                                    bottom:
-                                                    height *
-                                                        0.023,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    10,
                                                   ),
-                                                  hintStyle:
-                                                  TextStyle(
-                                                    fontFamily:
-                                                    "sfPro",
-                                                    color: Colors
-                                                        .black
-                                                        .withOpacity(
-                                                        0.6),
-                                                    fontWeight:
-                                                    FontWeight
-                                                        .w500,
+                                                  child: Image.memory(
+                                                    Uint8List.fromList(
+                                                        dashboardController
+                                                            .newsImage!),
+                                                    width: width * 0.8,
+                                                    height: sizingInformation
+                                                        .isDesktop
+                                                        ? height * 0.24
+                                                        : height * 0.14,
+                                                    fit: BoxFit.cover,
                                                   ),
-                                                  hintText:
-                                                  'Add category',
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height:
-                                          Get.height * 0.05,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            dashboardController.categoryList.add(
-                                                dashboardController
-                                                    .categoryController.text);
-                                            Get.back();
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return BackdropFilter(
-                                                  filter: ImageFilter.blur(
-                                                      sigmaX: 2, sigmaY: 2),
-                                                  child: Dialog(
-                                                    backgroundColor:
-                                                    Colors.transparent,
-                                                    child: Container(
-                                                      height: height * 0.55,
-                                                      width: width * 2,
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 10,
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                // height: height * 0.06,
+                                                width: width * 1.3,
+                                                decoration: BoxDecoration(
+                                                  color: ColorRes.appColor
+                                                      .withOpacity(0.1),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                  border: Border.all(
+                                                      color: ColorRes.appColor,
+                                                      width: border),
+                                                ),
+                                                child: TextField(
+                                                  controller: dashboardController
+                                                      .editHeadlineC,
+                                                  style: TextStyle(
+                                                    fontFamily: "sfPro",
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding: EdgeInsets.only(
+                                                      left: width * 0.08,
+                                                      bottom: height * 0.023,
+                                                    ),
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.6),
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                    hintText: 'Add Headline',
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                height: height * 0.06,
+                                                width: width * 1.3,
+                                                decoration: BoxDecoration(
+                                                  color: ColorRes.appColor
+                                                      .withOpacity(0.1),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                  border: Border.all(
+                                                      color: ColorRes.appColor,
+                                                      width: border),
+                                                ),
+                                                child: TextField(
+                                                  controller: dashboardController
+                                                      .editChannelC,
+                                                  style: TextStyle(
+                                                    fontFamily: "sfPro",
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding: EdgeInsets.only(
+                                                      left: width * 0.08,
+                                                      bottom: height * 0.023,
+                                                    ),
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.6),
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                    hintText:
+                                                    'Add Your Channel name',
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: height * 0.06,
+                                                    width: width * 0.6,
+                                                    decoration: BoxDecoration(
+                                                      color: ColorRes.appColor
+                                                          .withOpacity(0.1),
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                        5,
                                                       ),
+                                                      border: Border.all(
+                                                          color: ColorRes.appColor,
+                                                          width: border),
+                                                    ),
+                                                    child: TextField(
+                                                      controller:
+                                                      dashboardController
+                                                          .editDateC,
+                                                      style: TextStyle(
+                                                        fontFamily: "sfPro",
+                                                        color: Colors.black
+                                                            .withOpacity(0.8),
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        border: InputBorder.none,
+                                                        contentPadding:
+                                                        EdgeInsets.only(
+                                                          left: width * 0.08,
+                                                          bottom: height * 0.023,
+                                                        ),
+                                                        hintStyle: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.6),
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                        ),
+                                                        hintText: 'Add date',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: width * 0.1),
+                                                  Container(
+                                                    height: height * 0.06,
+                                                    width: width * 0.6,
+                                                    decoration: BoxDecoration(
+                                                      color: ColorRes.appColor
+                                                          .withOpacity(0.1),
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                        5,
+                                                      ),
+                                                      border: Border.all(
+                                                          color: ColorRes.appColor,
+                                                          width: border),
+                                                    ),
+                                                    child: TextField(
+                                                      controller:
+                                                      dashboardController
+                                                          .editTimeC,
+                                                      style: TextStyle(
+                                                        fontFamily: "sfPro",
+                                                        color: Colors.black
+                                                            .withOpacity(0.8),
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        border: InputBorder.none,
+                                                        contentPadding:
+                                                        EdgeInsets.only(
+                                                          left: width * 0.08,
+                                                          bottom: height * 0.023,
+                                                        ),
+                                                        hintStyle: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.6),
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                        ),
+                                                        hintText: 'Add Time',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                height: height * 0.06,
+                                                width: width * 1.3,
+                                                decoration: BoxDecoration(
+                                                  color: ColorRes.appColor
+                                                      .withOpacity(0.1),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                  border: Border.all(
+                                                      color: ColorRes.appColor,
+                                                      width: border),
+                                                ),
+                                                child: TextField(
+                                                  controller: dashboardController
+                                                      .editStateC,
+                                                  style: TextStyle(
+                                                    fontFamily: "sfPro",
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding: EdgeInsets.only(
+                                                      left: width * 0.08,
+                                                      bottom: height * 0.023,
+                                                    ),
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.6),
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                    hintText: 'Add which state....',
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                height: height * 0.06,
+                                                width: width * 1.3,
+                                                decoration: BoxDecoration(
+                                                  color: ColorRes.appColor
+                                                      .withOpacity(0.1),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                  border: Border.all(
+                                                      color: ColorRes.appColor,
+                                                      width: border),
+                                                ),
+                                                child: TextField(
+                                                  controller: dashboardController
+                                                      .editCityC,
+                                                  style: TextStyle(
+                                                    fontFamily: "sfPro",
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding: EdgeInsets.only(
+                                                      left: width * 0.08,
+                                                      bottom: height * 0.023,
+                                                    ),
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.6),
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                    hintText: 'Add which city...',
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                height: height * 0.24,
+                                                width: width * 1.3,
+                                                decoration: BoxDecoration(
+                                                  color: ColorRes.appColor
+                                                      .withOpacity(0.1),
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                  border: Border.all(
+                                                      color: ColorRes.appColor,
+                                                      width: border),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    TextField(
+                                                      controller:
+                                                      dashboardController
+                                                          .editTopicC,
+                                                      style: TextStyle(
+                                                        fontFamily: "sfPro",
+                                                        color: Colors.black
+                                                            .withOpacity(0.8),
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        border: InputBorder.none,
+                                                        contentPadding:
+                                                        EdgeInsets.only(
+                                                          left: width * 0.08,
+                                                          bottom: height * 0.023,
+                                                        ),
+                                                        hintStyle: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.6),
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                        ),
+                                                        hintText: 'Add Topic...',
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      margin: EdgeInsets.symmetric(
+                                                          horizontal: 10),
+                                                      height: height * 0.15,
+                                                      width: width * 1.3,
                                                       decoration: BoxDecoration(
                                                         color: Colors.white,
-                                                        border: Border.all(
-                                                          color: ColorRes
-                                                              .appColor,
-                                                          width: 1,
-                                                        ),
                                                         borderRadius:
                                                         BorderRadius.circular(
                                                           5,
                                                         ),
+                                                        border: Border.all(
+                                                            color:
+                                                            ColorRes.appColor,
+                                                            width: border),
                                                       ),
-                                                      child: Column(
-                                                        children: [
-                                                          const SizedBox(
-                                                            height: 2,
+                                                      child: TextField(
+                                                        controller:
+                                                        dashboardController
+                                                            .editDesC,
+                                                        style: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.8),
+                                                          fontWeight:
+                                                          FontWeight.w500,
+                                                        ),
+                                                        decoration: InputDecoration(
+                                                          border: InputBorder.none,
+                                                          contentPadding:
+                                                          EdgeInsets.only(
+                                                            left: width * 0.08,
+                                                            bottom: height * 0.023,
                                                           ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                            children: [
-                                                              GestureDetector(
-                                                                child: Icon(
-                                                                  Icons.close,
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                      0.8),
-                                                                  size: 20,
-                                                                ),
-                                                                onTap: () {
-                                                                  Get.back();
-                                                                },
-                                                              ),
-                                                            ],
+                                                          hintStyle: TextStyle(
+                                                            fontFamily: "sfPro",
+                                                            color: Colors.black
+                                                                .withOpacity(0.6),
+                                                            fontWeight:
+                                                            FontWeight.w500,
                                                           ),
-                                                          Text(
-                                                            'Sports',
-                                                            style: TextStyle(
-                                                                height: 1.5,
-                                                                color:
-                                                                Colors.black
-                                                                    .withOpacity(
-                                                                    0.8),
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w600,
-                                                                fontSize:
-                                                                textHeight *
-                                                                    0.04,
-                                                                fontFamily:
-                                                                "sfPro",
-                                                                letterSpacing: 2),
-                                                          ),
-                                                          SizedBox(
-                                                            height: Get.height *
-                                                                0.008,
-                                                          ),
-                                                          Container(
-                                                            height: 1,
-                                                            width: width * 0.8,
-                                                            color: ColorRes
-                                                                .appColor,
-                                                          ),
-                                                          SizedBox(
-                                                            height:
-                                                            Get.height * 0.04,
-                                                          ),
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                            children: [
-
-                                                              SizedBox(
-                                                                height:
-                                                                Get.height *
-                                                                    0.02,
-                                                              ),
-                                                              Container(
-
-                                                                height:
-                                                                height * 0.06,
-                                                                width:
-                                                                width * 1.3,
-                                                                decoration:
-                                                                BoxDecoration(
-                                                                  color: ColorRes
-                                                                      .appColor
-                                                                      .withOpacity(
-                                                                      0.1),
-                                                                  borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                    5,
-                                                                  ),
-                                                                  border:
-                                                                  Border.all(
-                                                                      color: ColorRes
-                                                                          .appColor
-                                                                      ,
-                                                                      width:
-                                                                      border),
-                                                                ),
-                                                                child: TextField(
-                                                                  controller: dashboardController
-                                                                      .subCategoryController,
-                                                                  style:
-                                                                  TextStyle(
-                                                                    fontFamily:
-                                                                    "sfPro",
-                                                                    color: Colors
-                                                                        .black
-                                                                        .withOpacity(
-                                                                        0.8),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                  ),
-                                                                  decoration:
-                                                                  InputDecoration(
-                                                                    border:
-                                                                    InputBorder
-                                                                        .none,
-                                                                    contentPadding:
-                                                                    EdgeInsets
-                                                                        .only(
-                                                                      left: width *
-                                                                          0.08,
-                                                                      bottom:
-                                                                      height *
-                                                                          0.023,
-                                                                    ),
-                                                                    hintStyle:
-                                                                    TextStyle(
-                                                                      fontFamily:
-                                                                      "sfPro",
-                                                                      color: Colors
-                                                                          .black
-                                                                          .withOpacity(
-                                                                          0.6),
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                    ),
-                                                                    hintText:
-                                                                    'Add sport sub category',
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height:
-                                                            Get.height * 0.05,
-                                                          ),
-                                                          GestureDetector(
-                                                            onTap: () {
-                                                              dashboardController
-                                                                  .update(
-                                                                  ['dash']);
-
-                                                              Get.back();
-                                                            },
-                                                            child: Container(
-                                                              decoration:
-                                                              BoxDecoration(
-                                                                color: ColorRes
-                                                                    .appColor,
-                                                                borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                  5,
-                                                                ),
-                                                              ),
-                                                              width: width * 0.7,
-                                                              height:
-                                                              height * 0.07,
-                                                              alignment: Alignment
-                                                                  .center,
-                                                              child: Text(
-                                                                "Add News",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                    height *
-                                                                        0.025,
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                    color: Colors
-                                                                        .white
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: height * 0.02,
-                                                          ),
-                                                        ],
+                                                          hintText:
+                                                          'Add description here..',
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                            dashboardController
-                                                .update(
-                                                ['dash']);
-                                          },
-                                          child: Container(
-                                            decoration:
-                                            BoxDecoration(
-                                              color: ColorRes
-                                                  .appColor,
-                                              borderRadius:
-                                              BorderRadius
-                                                  .circular(
-                                                5,
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            width: width * 0.7,
-                                            height:
-                                            height * 0.07,
-                                            alignment: Alignment
-                                                .center,
-                                            child: Text(
-                                              "Next",
-                                              style: TextStyle(
-                                                  fontSize:
-                                                  height *
-                                                      0.025,
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w600,
-                                                  color: Colors.white
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.05,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+
+                                              Get.back();
+                                              dashboardController.update(['dash']);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: ColorRes.appColor,
+                                                borderRadius: BorderRadius.circular(
+                                                  5,
+                                                ),
+                                              ),
+                                              width: width * 0.7,
+                                              height: height * 0.07,
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Done",
+                                                style: TextStyle(
+                                                    fontSize: height * 0.025,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.white),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: height * 0.02,
-                                        ),
-                                      ],
+                                          SizedBox(
+                                            height: height * 0.02,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: Container(
-                          height: sizingInformation.isDesktop
-                              ? 50
-                              : 40,
-                          width: width * 0.7,
-                          decoration: BoxDecoration(
-                              color: ColorRes.appColor,
-                              borderRadius:
-                              BorderRadius.circular(5)),
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                AssetRes.add,
-                                height: 15,
-                                width: 15,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Text(
-                                "ADD",
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'sfPro',
-                                    color: Colors.white),
-                              )
-                            ],
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: Image.asset(AssetRes.edit,
+                        height: sizingInformation.isMobile
+                            ? 15
+                            : 20,
+                        width: sizingInformation.isMobile
+                            ? 15
+                            : 20,
+                        color: ColorRes.appColor,),
+                    ),
+                    SizedBox(width:  10,),
+                    Text('Edit',style: mediumSf.copyWith(color: ColorRes.appColor,fontSize: 20),),
+                    SizedBox(width:  30,),
+                    Image.asset(AssetRes.delete,
+                      height: sizingInformation.isMobile
+                          ? 15
+                          : 20,
+                      width: sizingInformation.isMobile
+                          ? 15
+                          : 20,
+                      color: ColorRes.appColor,),
+                    SizedBox(width:  10,),
+                    Text('Delete',style: mediumSf.copyWith(color: ColorRes.appColor,fontSize: 20),),
+                  ],
+                ) : SizedBox(),
+                ],
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(
+                    horizontal: sizingInformation.isMobile
+                        ? 10
+                        : Get.height > 1360
+                            ? width * 0.6
+                            : Get.height <= 1360 && Get.height > 1050
+                                ? width * 0.25
+                                : width * 0.3,
+                    vertical: Get.height * 0.04),
+                height: Get.height * 0.8,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(width: 1, color: ColorRes.appColor)),
+                child:
+                dashboardController.isNewsCategory  ? Text('haha'):
+                dashboardController.isNewsAdded ?
+                Column(
+                  children: [
+                    Text(dashboardController.headline!,style: mediumSf.copyWith(fontSize: 27,fontWeight: FontWeight.w700),textAlign: TextAlign.center,),
+                    SizedBox(height: Get.height * 0.035,),
+                    Row(children: [
+                      Text(dashboardController.channel!,style: mediumSf.copyWith(fontSize:  20),),
+                      Spacer(),
+                      Text(dashboardController.city!,style: mediumSf.copyWith(fontSize:  20),),
+
+                      Text(dashboardController.date!,style: mediumSf.copyWith(fontSize:  20),),
+
+                      Text(dashboardController.time!,style: mediumSf.copyWith(fontSize:  20),),
+                    ],),
+                    SizedBox(height: Get.height * 0.035,),
+                   dashboardController.newsImage== null ?  SizedBox():Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(
+                          5,
+                        ),
+                        border: Border.all(
+                            color: Colors.white,
+                            width: 1),
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                        BorderRadius.circular(
+                          5,
+                        ),
+                        child: Image.memory(
+                          Uint8List.fromList(
+                              dashboardController
+                                  .newsImage!),
+                          width: width * 25,
+                          height: sizingInformation
+                              .isDesktop
+                              ? height * 0.5
+                              : height * 0.34,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.025,),
+                    Text(dashboardController.topic!,style: mediumSf.copyWith(fontSize:  32,fontWeight: FontWeight.w600),),
+                    SizedBox(height: Get.height * 0.025,),
+                    Text(dashboardController.description!,style: mediumSf.copyWith(fontSize:  22,fontWeight: FontWeight.w400),),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        dashboardController.isNewsCategory = true;
+                        dashboardController.update(['dash']);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorRes.appColor,
+                          borderRadius: BorderRadius.circular(
+                            5,
                           ),
                         ),
-                      )
-
-                    ],
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.02,
-                  ),
-
-                  Container(
-
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal:
-                    sizingInformation.isMobile ? 10 :
-                    Get.height > 1360 ?
-                    width * 0.6 : Get.height <= 1360 && Get.height > 1050
-                        ? width * 0.25
-                        : width * 0.3, vertical: Get.height * 0.04),
-                    height: Get.height * 0.8,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(width: 1, color: ColorRes.appColor)
+                        width: width * 0.7,
+                        height: height * 0.07,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Upload",
+                          style: TextStyle(
+                              fontSize: height * 0.025,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                      ),
                     ),
-                    child:   GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
+                  ],
+                ):
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return StatefulBuilder(
+                          builder: (context, updateDialog) {
                             return BackdropFilter(
-                              filter: ImageFilter.blur(
-                                  sigmaX: 2, sigmaY: 2),
+                              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                               child: Dialog(
-                                backgroundColor:
-                                Colors.transparent,
+                                backgroundColor: Colors.transparent,
                                 child: Container(
                                   // height: height * 0.55,
                                   width: width * 2,
-                                  padding: const EdgeInsets
-                                      .symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                     vertical: 10,
                                     horizontal: 10,
                                   ),
@@ -625,8 +775,7 @@ class NewsScreen extends StatelessWidget {
                                       color: ColorRes.appColor,
                                       width: 1,
                                     ),
-                                    borderRadius:
-                                    BorderRadius.circular(
+                                    borderRadius: BorderRadius.circular(
                                       5,
                                     ),
                                   ),
@@ -637,14 +786,13 @@ class NewsScreen extends StatelessWidget {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .end,
+                                            MainAxisAlignment.end,
                                         children: [
                                           GestureDetector(
                                             child: Icon(
                                               Icons.close,
-                                              color: Colors
-                                                  .black.withOpacity(0.8),
+                                              color:
+                                                  Colors.black.withOpacity(0.8),
                                               size: 20,
                                             ),
                                             onTap: () {
@@ -658,20 +806,14 @@ class NewsScreen extends StatelessWidget {
                                         style: TextStyle(
                                             height: 1.5,
                                             color:
-                                            Colors.black.withOpacity(0.8),
-                                            fontWeight:
-                                            FontWeight
-                                                .w600,
-                                            fontSize:
-                                            textHeight *
-                                                0.04,
-                                            fontFamily:
-                                            "sfPro",
+                                                Colors.black.withOpacity(0.8),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: textHeight * 0.04,
+                                            fontFamily: "sfPro",
                                             letterSpacing: 2),
                                       ),
                                       SizedBox(
-                                        height: Get.height *
-                                            0.008,
+                                        height: Get.height * 0.008,
                                       ),
                                       Container(
                                         height: 1,
@@ -679,622 +821,477 @@ class NewsScreen extends StatelessWidget {
                                         color: ColorRes.appColor,
                                       ),
                                       SizedBox(
-                                        height:
-                                        Get.height * 0.04,
+                                        height: Get.height * 0.04,
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment
-                                            .center,
-
+                                            CrossAxisAlignment.center,
                                         children: [
-
                                           SizedBox(
-                                            height:
-                                            Get.height *
-                                                0.02,
+                                            height: Get.height * 0.02,
                                           ),
-                                       GestureDetector(
-                                            onTap: () async {
-                                              // await dashboardController.pickImage();
-                                              // updateDialog.call(() {});
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(horizontal: width * 0.3, vertical: width * 0.2),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(
-                                                  10,
-                                                ),
-                                                color: Colors.white.withOpacity(
-                                                  0.20,
-                                                ),
-                                              ),
-                                              child: Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  Image.asset(
-                                                    AssetRes.imagePicker,
-                                                    height: height * 0.08,
-                                                    width: height * 0.08,
-                                                  ),
-                                                  Stack(
-                                                    alignment: Alignment.bottomRight,
-                                                    children: [
-                                                      Container(
-                                                        // color: Colors.red,
-                                                        height: height * 0.1,
-                                                        width: height * 0.1,
-                                                      ),
-                                                      Container(
-                                                        height: width * 0.08,
-                                                        width: width * 0.08,
-                                                        decoration: const BoxDecoration(
-                                                          color: Color(0xff55A1FF),
-                                                          shape: BoxShape.circle,
+                                          dashboardController.imageData == null
+                                              ? GestureDetector(
+                                                  onTap: () async {
+                                                    await dashboardController
+                                                        .pickImage();
+                                                    updateDialog.call(() {});
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                width * 0.3,
+                                                            vertical:
+                                                                width * 0.2),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          10,
                                                         ),
-                                                        alignment: Alignment.center,
-                                                        child: Wrap(
+                                                        color: ColorRes.appColor
+                                                            .withOpacity(
+                                                          0.20,
+                                                        ),
+                                                        border: Border.all(
+                                                            width: 1,
+                                                            color: ColorRes
+                                                                .appColor)),
+                                                    child: Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        Image.asset(
+                                                          AssetRes.imagePicker,
+                                                          height: height * 0.08,
+                                                          width: height * 0.08,
+                                                        ),
+                                                        Stack(
+                                                          alignment: Alignment
+                                                              .bottomRight,
                                                           children: [
-                                                            Icon(
-                                                              Icons.add,
-                                                              color: Colors.white,
-                                                              size: width * 0.04,
+                                                            Container(
+                                                              // color: Colors.red,
+                                                              height:
+                                                                  height * 0.1,
+                                                              width:
+                                                                  height * 0.1,
+                                                            ),
+                                                            Container(
+                                                              height:
+                                                                  width * 0.08,
+                                                              width:
+                                                                  width * 0.08,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                color: Color(
+                                                                    0xff55A1FF),
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                              ),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Wrap(
+                                                                children: [
+                                                                  Icon(
+                                                                    Icons.add,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: width *
+                                                                        0.04,
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
+                                                )
+                                              : Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      10,
+                                                    ),
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 1),
+                                                  ),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      10,
+                                                    ),
+                                                    child: Image.memory(
+                                                      Uint8List.fromList(
+                                                          dashboardController
+                                                              .imageData!),
+                                                      width: width * 0.8,
+                                                      height: sizingInformation
+                                                              .isDesktop
+                                                          ? height * 0.24
+                                                          : height * 0.14,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                          SizedBox(),
+                                          const SizedBox(
+                                            height: 10,
                                           ),
-
                                           Container(
-
-                                            height:
-                                            height * 0.06,
-                                            width:
-                                            width * 1.3,
-                                            decoration:
-                                            BoxDecoration(
+                                            height: height * 0.06,
+                                            width: width * 1.3,
+                                            decoration: BoxDecoration(
                                               color: ColorRes.appColor
                                                   .withOpacity(0.1),
                                               borderRadius:
-
-                                              BorderRadius
-                                                  .circular(
+                                                  BorderRadius.circular(
                                                 5,
                                               ),
-                                              border:
-                                              Border.all(
-                                                  color: ColorRes.appColor
-                                                  ,
-                                                  width:
-                                                  border),
+                                              border: Border.all(
+                                                  color: ColorRes.appColor,
+                                                  width: border),
                                             ),
                                             child: TextField(
                                               controller: dashboardController
-                                                  .categoryController,
-                                              style:
-                                              TextStyle(
-                                                fontFamily:
-                                                "sfPro",
-                                                color: Colors
-                                                    .black.withOpacity(0.8),
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500,
+                                                  .addHeadLineController,
+                                              style: TextStyle(
+                                                fontFamily: "sfPro",
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              decoration:
-                                              InputDecoration(
-                                                border:
-                                                InputBorder
-                                                    .none,
-                                                contentPadding:
-                                                EdgeInsets
-                                                    .only(
-                                                  left: width *
-                                                      0.08,
-                                                  bottom:
-                                                  height *
-                                                      0.023,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.only(
+                                                  left: width * 0.08,
+                                                  bottom: height * 0.023,
                                                 ),
-                                                hintStyle:
-                                                TextStyle(
-                                                  fontFamily:
-                                                  "sfPro",
-                                                  color: Colors
-                                                      .black
-                                                      .withOpacity(
-                                                      0.6),
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w500,
+                                                hintStyle: TextStyle(
+                                                  fontFamily: "sfPro",
+                                                  color: Colors.black
+                                                      .withOpacity(0.6),
+                                                  fontWeight: FontWeight.w500,
                                                 ),
-                                                hintText:
-                                                'Add category',
+                                                hintText: 'Add Headline',
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(height: 10,),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
                                           Container(
-
-                                            height:
-                                            height * 0.06,
-                                            width:
-                                            width * 1.3,
-                                            decoration:
-                                            BoxDecoration(
+                                            height: height * 0.06,
+                                            width: width * 1.3,
+                                            decoration: BoxDecoration(
                                               color: ColorRes.appColor
                                                   .withOpacity(0.1),
                                               borderRadius:
-
-                                              BorderRadius
-                                                  .circular(
+                                                  BorderRadius.circular(
                                                 5,
                                               ),
-                                              border:
-                                              Border.all(
-                                                  color: ColorRes.appColor
-                                                  ,
-                                                  width:
-                                                  border),
+                                              border: Border.all(
+                                                  color: ColorRes.appColor,
+                                                  width: border),
                                             ),
                                             child: TextField(
                                               controller: dashboardController
-                                                  .categoryController,
-                                              style:
-                                              TextStyle(
-                                                fontFamily:
-                                                "sfPro",
-                                                color: Colors
-                                                    .black.withOpacity(0.8),
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500,
+                                                  .channelController,
+                                              style: TextStyle(
+                                                fontFamily: "sfPro",
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              decoration:
-                                              InputDecoration(
-                                                border:
-                                                InputBorder
-                                                    .none,
-                                                contentPadding:
-                                                EdgeInsets
-                                                    .only(
-                                                  left: width *
-                                                      0.08,
-                                                  bottom:
-                                                  height *
-                                                      0.023,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.only(
+                                                  left: width * 0.08,
+                                                  bottom: height * 0.023,
                                                 ),
-                                                hintStyle:
-                                                TextStyle(
-                                                  fontFamily:
-                                                  "sfPro",
-                                                  color: Colors
-                                                      .black
-                                                      .withOpacity(
-                                                      0.6),
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w500,
+                                                hintStyle: TextStyle(
+                                                  fontFamily: "sfPro",
+                                                  color: Colors.black
+                                                      .withOpacity(0.6),
+                                                  fontWeight: FontWeight.w500,
                                                 ),
                                                 hintText:
-                                                'Add category',
+                                                    'Add Your Channel name',
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(height: 10,),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               Container(
-
-                                                height:
-                                                height * 0.06,
-                                                width:
-                                                width * 0.6,
-                                                decoration:
-                                                BoxDecoration(
+                                                height: height * 0.06,
+                                                width: width * 0.6,
+                                                decoration: BoxDecoration(
                                                   color: ColorRes.appColor
                                                       .withOpacity(0.1),
                                                   borderRadius:
-
-                                                  BorderRadius
-                                                      .circular(
+                                                      BorderRadius.circular(
                                                     5,
                                                   ),
-                                                  border:
-                                                  Border.all(
-                                                      color: ColorRes.appColor
-                                                      ,
-                                                      width:
-                                                      border),
+                                                  border: Border.all(
+                                                      color: ColorRes.appColor,
+                                                      width: border),
                                                 ),
                                                 child: TextField(
-                                                  controller: dashboardController
-                                                      .categoryController,
-                                                  style:
-                                                  TextStyle(
-                                                    fontFamily:
-                                                    "sfPro",
-                                                    color: Colors
-                                                        .black.withOpacity(0.8),
-                                                    fontWeight:
-                                                    FontWeight
-                                                        .w500,
+                                                  controller:
+                                                      dashboardController
+                                                          .dateController,
+                                                  style: TextStyle(
+                                                    fontFamily: "sfPro",
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    fontWeight: FontWeight.w500,
                                                   ),
-                                                  decoration:
-                                                  InputDecoration(
-                                                    border:
-                                                    InputBorder
-                                                        .none,
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
                                                     contentPadding:
-                                                    EdgeInsets
-                                                        .only(
-                                                      left: width *
-                                                          0.08,
-                                                      bottom:
-                                                      height *
-                                                          0.023,
+                                                        EdgeInsets.only(
+                                                      left: width * 0.08,
+                                                      bottom: height * 0.023,
                                                     ),
-                                                    hintStyle:
-                                                    TextStyle(
-                                                      fontFamily:
-                                                      "sfPro",
-                                                      color: Colors
-                                                          .black
-                                                          .withOpacity(
-                                                          0.6),
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.6),
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w500,
+                                                          FontWeight.w500,
                                                     ),
-                                                    hintText:
-                                                    'Add category',
+                                                    hintText: 'Add date',
                                                   ),
                                                 ),
                                               ),
                                               SizedBox(width: width * 0.1),
                                               Container(
-
-                                                height:
-                                                height * 0.06,
-                                                width:
-                                                width * 0.6,
-                                                decoration:
-                                                BoxDecoration(
+                                                height: height * 0.06,
+                                                width: width * 0.6,
+                                                decoration: BoxDecoration(
                                                   color: ColorRes.appColor
                                                       .withOpacity(0.1),
                                                   borderRadius:
-
-                                                  BorderRadius
-                                                      .circular(
+                                                      BorderRadius.circular(
                                                     5,
                                                   ),
-                                                  border:
-                                                  Border.all(
-                                                      color: ColorRes.appColor
-                                                      ,
-                                                      width:
-                                                      border),
+                                                  border: Border.all(
+                                                      color: ColorRes.appColor,
+                                                      width: border),
                                                 ),
                                                 child: TextField(
-                                                  controller: dashboardController
-                                                      .categoryController,
-                                                  style:
-                                                  TextStyle(
-                                                    fontFamily:
-                                                    "sfPro",
-                                                    color: Colors
-                                                        .black.withOpacity(0.8),
-                                                    fontWeight:
-                                                    FontWeight
-                                                        .w500,
+                                                  controller:
+                                                      dashboardController
+                                                          .timeController,
+                                                  style: TextStyle(
+                                                    fontFamily: "sfPro",
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    fontWeight: FontWeight.w500,
                                                   ),
-                                                  decoration:
-                                                  InputDecoration(
-                                                    border:
-                                                    InputBorder
-                                                        .none,
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
                                                     contentPadding:
-                                                    EdgeInsets
-                                                        .only(
-                                                      left: width *
-                                                          0.08,
-                                                      bottom:
-                                                      height *
-                                                          0.023,
+                                                        EdgeInsets.only(
+                                                      left: width * 0.08,
+                                                      bottom: height * 0.023,
                                                     ),
-                                                    hintStyle:
-                                                    TextStyle(
-                                                      fontFamily:
-                                                      "sfPro",
-                                                      color: Colors
-                                                          .black
-                                                          .withOpacity(
-                                                          0.6),
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.6),
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w500,
+                                                          FontWeight.w500,
                                                     ),
-                                                    hintText:
-                                                    'Add category',
+                                                    hintText: 'Add Time',
                                                   ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(height: 10,),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
                                           Container(
-
-                                            height:
-                                            height * 0.06,
-                                            width:
-                                            width * 1.3,
-                                            decoration:
-                                            BoxDecoration(
+                                            height: height * 0.06,
+                                            width: width * 1.3,
+                                            decoration: BoxDecoration(
                                               color: ColorRes.appColor
                                                   .withOpacity(0.1),
                                               borderRadius:
-
-                                              BorderRadius
-                                                  .circular(
+                                                  BorderRadius.circular(
                                                 5,
                                               ),
-                                              border:
-                                              Border.all(
-                                                  color: ColorRes.appColor
-                                                  ,
-                                                  width:
-                                                  border),
+                                              border: Border.all(
+                                                  color: ColorRes.appColor,
+                                                  width: border),
                                             ),
                                             child: TextField(
                                               controller: dashboardController
-                                                  .categoryController,
-                                              style:
-                                              TextStyle(
-                                                fontFamily:
-                                                "sfPro",
-                                                color: Colors
-                                                    .black.withOpacity(0.8),
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500,
+                                                  .stateController,
+                                              style: TextStyle(
+                                                fontFamily: "sfPro",
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              decoration:
-                                              InputDecoration(
-                                                border:
-                                                InputBorder
-                                                    .none,
-                                                contentPadding:
-                                                EdgeInsets
-                                                    .only(
-                                                  left: width *
-                                                      0.08,
-                                                  bottom:
-                                                  height *
-                                                      0.023,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.only(
+                                                  left: width * 0.08,
+                                                  bottom: height * 0.023,
                                                 ),
-                                                hintStyle:
-                                                TextStyle(
-                                                  fontFamily:
-                                                  "sfPro",
-                                                  color: Colors
-                                                      .black
-                                                      .withOpacity(
-                                                      0.6),
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w500,
+                                                hintStyle: TextStyle(
+                                                  fontFamily: "sfPro",
+                                                  color: Colors.black
+                                                      .withOpacity(0.6),
+                                                  fontWeight: FontWeight.w500,
                                                 ),
-                                                hintText:
-                                                'Add category',
+                                                hintText: 'Add which state....',
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 10,),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
                                           Container(
-
-                                            height:
-                                            height * 0.06,
-                                            width:
-                                            width * 1.3,
-                                            decoration:
-                                            BoxDecoration(
+                                            height: height * 0.06,
+                                            width: width * 1.3,
+                                            decoration: BoxDecoration(
                                               color: ColorRes.appColor
                                                   .withOpacity(0.1),
                                               borderRadius:
-
-                                              BorderRadius
-                                                  .circular(
+                                                  BorderRadius.circular(
                                                 5,
                                               ),
-                                              border:
-                                              Border.all(
-                                                  color: ColorRes.appColor
-                                                  ,
-                                                  width:
-                                                  border),
+                                              border: Border.all(
+                                                  color: ColorRes.appColor,
+                                                  width: border),
                                             ),
                                             child: TextField(
                                               controller: dashboardController
-                                                  .categoryController,
-                                              style:
-                                              TextStyle(
-                                                fontFamily:
-                                                "sfPro",
-                                                color: Colors
-                                                    .black.withOpacity(0.8),
-                                                fontWeight:
-                                                FontWeight
-                                                    .w500,
+                                                  .cityController,
+                                              style: TextStyle(
+                                                fontFamily: "sfPro",
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              decoration:
-                                              InputDecoration(
-                                                border:
-                                                InputBorder
-                                                    .none,
-                                                contentPadding:
-                                                EdgeInsets
-                                                    .only(
-                                                  left: width *
-                                                      0.08,
-                                                  bottom:
-                                                  height *
-                                                      0.023,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                contentPadding: EdgeInsets.only(
+                                                  left: width * 0.08,
+                                                  bottom: height * 0.023,
                                                 ),
-                                                hintStyle:
-                                                TextStyle(
-                                                  fontFamily:
-                                                  "sfPro",
-                                                  color: Colors
-                                                      .black
-                                                      .withOpacity(
-                                                      0.6),
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w500,
+                                                hintStyle: TextStyle(
+                                                  fontFamily: "sfPro",
+                                                  color: Colors.black
+                                                      .withOpacity(0.6),
+                                                  fontWeight: FontWeight.w500,
                                                 ),
-                                                hintText:
-                                                'Add category',
+                                                hintText: 'Add which city...',
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 10,),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
                                           Container(
-
-                                            height:
-                                            height * 0.24,
-                                            width:
-                                            width * 1.3,
-                                            decoration:
-                                            BoxDecoration(
+                                            height: height * 0.24,
+                                            width: width * 1.3,
+                                            decoration: BoxDecoration(
                                               color: ColorRes.appColor
                                                   .withOpacity(0.1),
                                               borderRadius:
-
-                                              BorderRadius
-                                                  .circular(
+                                                  BorderRadius.circular(
                                                 5,
                                               ),
-                                              border:
-                                              Border.all(
-                                                  color: ColorRes.appColor
-                                                  ,
-                                                  width:
-                                                  border),
+                                              border: Border.all(
+                                                  color: ColorRes.appColor,
+                                                  width: border),
                                             ),
                                             child: Column(
                                               children: [
                                                 TextField(
-                                                  controller: dashboardController
-                                                      .categoryController,
-                                                  style:
-                                                  TextStyle(
-                                                    fontFamily:
-                                                    "sfPro",
-                                                    color: Colors
-                                                        .black.withOpacity(0.8),
-                                                    fontWeight:
-                                                    FontWeight
-                                                        .w500,
+                                                  controller:
+                                                      dashboardController
+                                                          .topicController,
+                                                  style: TextStyle(
+                                                    fontFamily: "sfPro",
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                    fontWeight: FontWeight.w500,
                                                   ),
-                                                  decoration:
-                                                  InputDecoration(
-                                                    border:
-                                                    InputBorder
-                                                        .none,
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
                                                     contentPadding:
-                                                    EdgeInsets
-                                                        .only(
-                                                      left: width *
-                                                          0.08,
-                                                      bottom:
-                                                      height *
-                                                          0.023,
+                                                        EdgeInsets.only(
+                                                      left: width * 0.08,
+                                                      bottom: height * 0.023,
                                                     ),
-                                                    hintStyle:
-                                                    TextStyle(
-                                                      fontFamily:
-                                                      "sfPro",
-                                                      color: Colors
-                                                          .black
-                                                          .withOpacity(
-                                                          0.6),
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.6),
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w500,
+                                                          FontWeight.w500,
                                                     ),
-                                                    hintText:
-                                                    'Add category',
+                                                    hintText: 'Add Topic...',
                                                   ),
                                                 ),
                                                 Container(
-margin: EdgeInsets.symmetric(horizontal:  10),
-                                                  height:
-                                                  height * 0.15,
-                                                  width:
-                                                  width * 1.3,
-                                                  decoration:
-                                                  BoxDecoration(
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                                  height: height * 0.15,
+                                                  width: width * 1.3,
+                                                  decoration: BoxDecoration(
                                                     color: Colors.white,
                                                     borderRadius:
-
-                                                    BorderRadius
-                                                        .circular(
+                                                        BorderRadius.circular(
                                                       5,
                                                     ),
-                                                    border:
-                                                    Border.all(
-                                                        color: ColorRes.appColor
-                                                        ,
-                                                        width:
-                                                        border),
+                                                    border: Border.all(
+                                                        color:
+                                                            ColorRes.appColor,
+                                                        width: border),
                                                   ),
-                                                  child:
-                                                  TextField(
-                                                    controller: dashboardController
-                                                        .categoryController,
-                                                    style:
-                                                    TextStyle(
-                                                      fontFamily:
-                                                      "sfPro",
-                                                      color: Colors
-                                                          .black.withOpacity(0.8),
+                                                  child: TextField(
+                                                    controller:
+                                                        dashboardController
+                                                            .desController,
+                                                    style: TextStyle(
+                                                      fontFamily: "sfPro",
+                                                      color: Colors.black
+                                                          .withOpacity(0.8),
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w500,
+                                                          FontWeight.w500,
                                                     ),
-                                                    decoration:
-                                                    InputDecoration(
-                                                      border:
-                                                      InputBorder
-                                                          .none,
+                                                    decoration: InputDecoration(
+                                                      border: InputBorder.none,
                                                       contentPadding:
-                                                      EdgeInsets
-                                                          .only(
-                                                        left: width *
-                                                            0.08,
-                                                        bottom:
-                                                        height *
-                                                            0.023,
+                                                          EdgeInsets.only(
+                                                        left: width * 0.08,
+                                                        bottom: height * 0.023,
                                                       ),
-                                                      hintStyle:
-                                                      TextStyle(
-                                                        fontFamily:
-                                                        "sfPro",
-                                                        color: Colors
-                                                            .black
-                                                            .withOpacity(
-                                                            0.6),
+                                                      hintStyle: TextStyle(
+                                                        fontFamily: "sfPro",
+                                                        color: Colors.black
+                                                            .withOpacity(0.6),
                                                         fontWeight:
-                                                        FontWeight
-                                                            .w500,
+                                                            FontWeight.w500,
                                                       ),
                                                       hintText:
-                                                      'Add category',
+                                                          'Add description here..',
                                                     ),
                                                   ),
                                                 ),
@@ -1304,269 +1301,41 @@ margin: EdgeInsets.symmetric(horizontal:  10),
                                         ],
                                       ),
                                       SizedBox(
-                                        height:
-                                        Get.height * 0.05,
+                                        height: Get.height * 0.05,
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          dashboardController.categoryList.add(
-                                              dashboardController
-                                                  .categoryController.text);
+
+                                          dashboardController.isNewsAdded =
+                                              true;
+                                          dashboardController.headline = dashboardController.addHeadLineController.text;
+                                          dashboardController.channel = dashboardController.channelController.text;
+                                          dashboardController.city = dashboardController.cityController.text;
+                                          dashboardController.date = dashboardController.dateController.text;
+                                          dashboardController.time = dashboardController.timeController.text;
+                                          dashboardController.topic = dashboardController.topicController.text;
+                                          dashboardController.description = dashboardController.desController.text;
+                                          dashboardController.newsImage = dashboardController.imageData;
+
                                           Get.back();
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return BackdropFilter(
-                                                filter: ImageFilter.blur(
-                                                    sigmaX: 2, sigmaY: 2),
-                                                child: Dialog(
-                                                  backgroundColor:
-                                                  Colors.transparent,
-                                                  child: Container(
-                                                    height: height * 0.55,
-                                                    width: width * 2,
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 10,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(
-                                                        color: ColorRes
-                                                            .appColor,
-                                                        width: 1,
-                                                      ),
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                        5,
-                                                      ),
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        const SizedBox(
-                                                          height: 2,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .end,
-                                                          children: [
-                                                            GestureDetector(
-                                                              child: Icon(
-                                                                Icons.close,
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                    0.8),
-                                                                size: 20,
-                                                              ),
-                                                              onTap: () {
-                                                                Get.back();
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Text(
-                                                          'Sports',
-                                                          style: TextStyle(
-                                                              height: 1.5,
-                                                              color:
-                                                              Colors.black
-                                                                  .withOpacity(
-                                                                  0.8),
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w600,
-                                                              fontSize:
-                                                              textHeight *
-                                                                  0.04,
-                                                              fontFamily:
-                                                              "sfPro",
-                                                              letterSpacing: 2),
-                                                        ),
-                                                        SizedBox(
-                                                          height: Get.height *
-                                                              0.008,
-                                                        ),
-                                                        Container(
-                                                          height: 1,
-                                                          width: width * 0.8,
-                                                          color: ColorRes
-                                                              .appColor,
-                                                        ),
-                                                        SizedBox(
-                                                          height:
-                                                          Get.height * 0.04,
-                                                        ),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                          children: [
-
-                                                            SizedBox(
-                                                              height:
-                                                              Get.height *
-                                                                  0.02,
-                                                            ),
-                                                            Container(
-
-                                                              height:
-                                                              height * 0.06,
-                                                              width:
-                                                              width * 1.3,
-                                                              decoration:
-                                                              BoxDecoration(
-                                                                color: ColorRes
-                                                                    .appColor
-                                                                    .withOpacity(
-                                                                    0.1),
-                                                                borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                  5,
-                                                                ),
-                                                                border:
-                                                                Border.all(
-                                                                    color: ColorRes
-                                                                        .appColor
-                                                                    ,
-                                                                    width:
-                                                                    border),
-                                                              ),
-                                                              child: TextField(
-                                                                controller: dashboardController
-                                                                    .subCategoryController,
-                                                                style:
-                                                                TextStyle(
-                                                                  fontFamily:
-                                                                  "sfPro",
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                      0.8),
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                                ),
-                                                                decoration:
-                                                                InputDecoration(
-                                                                  border:
-                                                                  InputBorder
-                                                                      .none,
-                                                                  contentPadding:
-                                                                  EdgeInsets
-                                                                      .only(
-                                                                    left: width *
-                                                                        0.08,
-                                                                    bottom:
-                                                                    height *
-                                                                        0.023,
-                                                                  ),
-                                                                  hintStyle:
-                                                                  TextStyle(
-                                                                    fontFamily:
-                                                                    "sfPro",
-                                                                    color: Colors
-                                                                        .black
-                                                                        .withOpacity(
-                                                                        0.6),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                  ),
-                                                                  hintText:
-                                                                  'Add sport sub category',
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          height:
-                                                          Get.height * 0.05,
-                                                        ),
-                                                        GestureDetector(
-                                                          onTap: () {
-                                                            dashboardController
-                                                                .update(
-                                                                ['dash']);
-
-                                                            Get.back();
-                                                          },
-                                                          child: Container(
-                                                            decoration:
-                                                            BoxDecoration(
-                                                              color: ColorRes
-                                                                  .appColor,
-                                                              borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                5,
-                                                              ),
-                                                            ),
-                                                            width: width * 0.7,
-                                                            height:
-                                                            height * 0.07,
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: Text(
-                                                              "Add News",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                  height *
-                                                                      0.025,
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                                  color: Colors
-                                                                      .white
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: height * 0.02,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
-                                          dashboardController
-                                              .update(
-                                              ['dash']);
+                                          dashboardController.update(['dash']);
                                         },
                                         child: Container(
-                                          decoration:
-                                          BoxDecoration(
-                                            color: ColorRes
-                                                .appColor,
-                                            borderRadius:
-                                            BorderRadius
-                                                .circular(
+                                          decoration: BoxDecoration(
+                                            color: ColorRes.appColor,
+                                            borderRadius: BorderRadius.circular(
                                               5,
                                             ),
                                           ),
                                           width: width * 0.7,
-                                          height:
-                                          height * 0.07,
-                                          alignment: Alignment
-                                              .center,
+                                          height: height * 0.07,
+                                          alignment: Alignment.center,
                                           child: Text(
                                             "Next",
                                             style: TextStyle(
-                                                fontSize:
-                                                height *
-                                                    0.025,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w600,
-                                                color: Colors.white
-                                            ),
+                                                fontSize: height * 0.025,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white),
                                           ),
                                         ),
                                       ),
@@ -1581,46 +1350,47 @@ margin: EdgeInsets.symmetric(horizontal:  10),
                           },
                         );
                       },
-                      child: Container(
-                        height: sizingInformation.isDesktop
-                            ? 50
-                            : 40,
-                        width: width * 0.7,
-                        decoration: BoxDecoration(
-                            color: ColorRes.appColor,
-                            borderRadius:
-                            BorderRadius.circular(5)),
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              AssetRes.add,
-                              height: 15,
-                              width: 15,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              "ADD",
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'sfPro',
-                                  color: Colors.white),
-                            )
-                          ],
+                    );
+                  },
+                  child: Container(
+                    height: sizingInformation.isDesktop ? 50 : 40,
+                    width: width * 0.7,
+                    decoration: BoxDecoration(
+                        color: ColorRes.appColor,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          AssetRes.add,
+                          height: 15,
+                          width: 15,
                         ),
-                      ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          "ADD",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'sfPro',
+                              color: Colors.white),
+                        )
+                      ],
                     ),
                   ),
+                ),
 
-                ],
+
+
+
+
               ),
-            );
-          }
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
