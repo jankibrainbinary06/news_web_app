@@ -6,6 +6,8 @@ import 'package:news_web_app/screens/category_screen/category_screen.dart';
 import 'package:news_web_app/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:news_web_app/screens/login_screen/login_screen.dart';
 
+import 'demo.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
