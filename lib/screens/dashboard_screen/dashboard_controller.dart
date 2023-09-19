@@ -10,9 +10,6 @@ class DashboardController extends GetxController {
   TextEditingController subCategoryController = TextEditingController();
   TextEditingController editCategoryController = TextEditingController();
   TextEditingController addHeadLineController = TextEditingController();
-
-  List categoryList = [];
-  int idindex = 0;
   TextEditingController channelController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController stateController = TextEditingController();
@@ -29,7 +26,7 @@ class DashboardController extends GetxController {
   TextEditingController editTopicC = TextEditingController();
   TextEditingController editDesC = TextEditingController();
 
-  List categoryList =[];
+
 
   bool isCategory = true;
   bool isNews = false;
@@ -37,6 +34,15 @@ class DashboardController extends GetxController {
   bool isTapCategory = false;
   bool isNewsAdded = false;
   bool isNewsCategory = true;
+  bool isDrop = false;
+  bool isNewsDetail = false;
+
+
+  int selectedIndex = 0;
+
+
+  List categoryList = [];
+  int idindex = 0;
 
 String? headline = '';
 String? channel = '';
@@ -52,6 +58,17 @@ String?  description= '';
 
   Uint8List? imageData ;
   Uint8List? newsImage;
+
+
+  List? dropValue = List.generate(9, (index) => 'Male');
+
+  List<String>? dropItems = ["Male", "Female", "Other"];
+
+  dropOnChange(String? value, int? index) {
+    dropValue![index!] = value!;
+    isNewsDetail = true;
+    update(["dash"]);
+  }
 
   Future<void> pickImage() async {
 

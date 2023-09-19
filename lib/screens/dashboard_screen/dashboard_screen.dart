@@ -41,6 +41,7 @@ class DashBoardScreen extends StatelessWidget {
                       dashboardController.isNews = false;
                       dashboardController.isLogout = false;
                       dashboardController.isCategory = true;
+                      dashboardController.isNewsDetail = false;
                       dashboardController.update(['dash']);
                     },
                     child: SizedBox(
@@ -240,6 +241,8 @@ Container(color: ColorRes.appColor,width: width*0.5,height: 1,),
                           );
                         },
                       );
+                      dashboardController.isNewsDetail = false;
+                      dashboardController.update(['dash']);
                     },
                     child: SizedBox(
                       height: 70,
@@ -309,12 +312,13 @@ crossAxisAlignment: CrossAxisAlignment.start,
                           child: Row(
                             children: [
                               SizedBox(width: width * 0.1,),
-                              GestureDetector(
+                              dashboardController
+                                  .isTapCategory? GestureDetector(
                                   onTap: () {
                                     dashboardController.isTapCategory = false;
                                     dashboardController.update(['dash']);
                                   },
-                                  child: Icon(Icons.arrow_back_sharp,size: 30,color: Colors.black.withOpacity(0.8),)),
+                                  child: Icon(Icons.arrow_back_sharp,size: 30,color: Colors.black.withOpacity(0.8),)) : SizedBox(),
                             ],
                           ),
                         ),
@@ -344,6 +348,8 @@ crossAxisAlignment: CrossAxisAlignment.start,
                                       dashboardController.isNews = false;
                                       dashboardController.isLogout = false;
                                       dashboardController.isCategory = true;
+                                      dashboardController.isNewsDetail = false;
+
                                       dashboardController.update(['dash']);
                                     },
                                     child: Container(
@@ -385,6 +391,7 @@ crossAxisAlignment: CrossAxisAlignment.start,
                                       dashboardController.isCategory = false;
                                       dashboardController.isLogout = false;
                                       dashboardController.isNews = true;
+
                                       dashboardController.update(['dash']);
                                     },
                                     child: Container(
@@ -543,6 +550,8 @@ crossAxisAlignment: CrossAxisAlignment.start,
                                           );
                                         },
                                       );
+                                      dashboardController.isNewsDetail = false;
+
                                     },
                                     child: Container(
                                       width:Get.width >1150? width * 0.89 : width * 0.7,
