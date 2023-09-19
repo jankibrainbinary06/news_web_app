@@ -246,29 +246,39 @@ class NewsScreen extends StatelessWidget {
                                                       color: ColorRes.appColor,
                                                       width: border),
                                                 ),
-                                                child: TextField(
-                                                  controller: dashboardController
-                                                      .editHeadlineC,
-                                                  style: TextStyle(
-                                                    fontFamily: "sfPro",
-                                                    color: Colors.black
-                                                        .withOpacity(0.8),
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    contentPadding: EdgeInsets.only(
-                                                      left: width * 0.08,
-                                                      bottom: height * 0.023,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width : width * 1.15,
+                                                      child: TextField(
+                                                        maxLines: 2,
+                                                        controller: dashboardController
+                                                            .editHeadlineC,
+                                                        style: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.8),
+                                                          fontWeight: FontWeight.w500,
+                                                        ),
+                                                        decoration: InputDecoration(
+                                                          border: InputBorder.none,
+                                                          contentPadding: EdgeInsets.only(
+                                                            left: width * 0.08,
+                                                            bottom: height * 0.023,
+                                                          ),
+                                                          hintStyle: TextStyle(
+                                                            fontFamily: "sfPro",
+                                                            color: Colors.black
+                                                                .withOpacity(0.6),
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                          hintText: 'Add Headline',
+                                                        ),
+                                                      ),
                                                     ),
-                                                    hintStyle: TextStyle(
-                                                      fontFamily: "sfPro",
-                                                      color: Colors.black
-                                                          .withOpacity(0.6),
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                    hintText: 'Add Headline',
-                                                  ),
+                                                    SizedBox(
+                                                   child: Image.asset(AssetRes.edit,height: 20,width: 20,color: Colors.black.withOpacity(0.8),)),
+                                                  ],
                                                 ),
                                               ),
                                               const SizedBox(
@@ -288,30 +298,39 @@ class NewsScreen extends StatelessWidget {
                                                       color: ColorRes.appColor,
                                                       width: border),
                                                 ),
-                                                child: TextField(
-                                                  controller: dashboardController
-                                                      .editChannelC,
-                                                  style: TextStyle(
-                                                    fontFamily: "sfPro",
-                                                    color: Colors.black
-                                                        .withOpacity(0.8),
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    contentPadding: EdgeInsets.only(
-                                                      left: width * 0.08,
-                                                      bottom: height * 0.023,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width : width * 1.15,
+                                                      child: TextField(
+                                                        controller: dashboardController
+                                                            .editChannelC,
+                                                        style: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.8),
+                                                          fontWeight: FontWeight.w500,
+                                                        ),
+                                                        decoration: InputDecoration(
+                                                          border: InputBorder.none,
+                                                          contentPadding: EdgeInsets.only(
+                                                            left: width * 0.08,
+                                                            bottom: height * 0.023,
+                                                          ),
+                                                          hintStyle: TextStyle(
+                                                            fontFamily: "sfPro",
+                                                            color: Colors.black
+                                                                .withOpacity(0.6),
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                          hintText:
+                                                          'Add Your Channel name',
+                                                        ),
+                                                      ),
                                                     ),
-                                                    hintStyle: TextStyle(
-                                                      fontFamily: "sfPro",
-                                                      color: Colors.black
-                                                          .withOpacity(0.6),
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                    hintText:
-                                                    'Add Your Channel name',
-                                                  ),
+                                                    SizedBox(
+                                                        child: Image.asset(AssetRes.edit,height: 20,width: 20,color: Colors.black.withOpacity(0.8),)),
+                                                  ],
                                                 ),
                                               ),
                                               const SizedBox(
@@ -425,29 +444,38 @@ class NewsScreen extends StatelessWidget {
                                                       color: ColorRes.appColor,
                                                       width: border),
                                                 ),
-                                                child: TextField(
-                                                  controller: dashboardController
-                                                      .editStateC,
-                                                  style: TextStyle(
-                                                    fontFamily: "sfPro",
-                                                    color: Colors.black
-                                                        .withOpacity(0.8),
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    contentPadding: EdgeInsets.only(
-                                                      left: width * 0.08,
-                                                      bottom: height * 0.023,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width : width * 1.15,
+                                                      child: TextField(
+                                                        controller: dashboardController
+                                                            .editStateC,
+                                                        style: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.8),
+                                                          fontWeight: FontWeight.w500,
+                                                        ),
+                                                        decoration: InputDecoration(
+                                                          border: InputBorder.none,
+                                                          contentPadding: EdgeInsets.only(
+                                                            left: width * 0.08,
+                                                            bottom: height * 0.023,
+                                                          ),
+                                                          hintStyle: TextStyle(
+                                                            fontFamily: "sfPro",
+                                                            color: Colors.black
+                                                                .withOpacity(0.6),
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                          hintText: 'Add which state....',
+                                                        ),
+                                                      ),
                                                     ),
-                                                    hintStyle: TextStyle(
-                                                      fontFamily: "sfPro",
-                                                      color: Colors.black
-                                                          .withOpacity(0.6),
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                    hintText: 'Add which state....',
-                                                  ),
+                                                    SizedBox(
+                                                        child: Image.asset(AssetRes.edit,height: 20,width: 20,color: Colors.black.withOpacity(0.8),)),
+                                                  ],
                                                 ),
                                               ),
                                               SizedBox(
@@ -467,29 +495,38 @@ class NewsScreen extends StatelessWidget {
                                                       color: ColorRes.appColor,
                                                       width: border),
                                                 ),
-                                                child: TextField(
-                                                  controller: dashboardController
-                                                      .editCityC,
-                                                  style: TextStyle(
-                                                    fontFamily: "sfPro",
-                                                    color: Colors.black
-                                                        .withOpacity(0.8),
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    contentPadding: EdgeInsets.only(
-                                                      left: width * 0.08,
-                                                      bottom: height * 0.023,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width : width * 1.15,
+                                                      child: TextField(
+                                                        controller: dashboardController
+                                                            .editCityC,
+                                                        style: TextStyle(
+                                                          fontFamily: "sfPro",
+                                                          color: Colors.black
+                                                              .withOpacity(0.8),
+                                                          fontWeight: FontWeight.w500,
+                                                        ),
+                                                        decoration: InputDecoration(
+                                                          border: InputBorder.none,
+                                                          contentPadding: EdgeInsets.only(
+                                                            left: width * 0.08,
+                                                            bottom: height * 0.023,
+                                                          ),
+                                                          hintStyle: TextStyle(
+                                                            fontFamily: "sfPro",
+                                                            color: Colors.black
+                                                                .withOpacity(0.6),
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                          hintText: 'Add which city...',
+                                                        ),
+                                                      ),
                                                     ),
-                                                    hintStyle: TextStyle(
-                                                      fontFamily: "sfPro",
-                                                      color: Colors.black
-                                                          .withOpacity(0.6),
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                    hintText: 'Add which city...',
-                                                  ),
+                                                    SizedBox(
+                                                        child: Image.asset(AssetRes.edit,height: 20,width: 20,color: Colors.black.withOpacity(0.8),)),
+                                                  ],
                                                 ),
                                               ),
                                               SizedBox(
@@ -511,36 +548,46 @@ class NewsScreen extends StatelessWidget {
                                                 ),
                                                 child: Column(
                                                   children: [
-                                                    TextField(
-                                                      controller:
-                                                      dashboardController
-                                                          .editTopicC,
-                                                      style: TextStyle(
-                                                        fontFamily: "sfPro",
-                                                        color: Colors.black
-                                                            .withOpacity(0.8),
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
-                                                      decoration: InputDecoration(
-                                                        border: InputBorder.none,
-                                                        contentPadding:
-                                                        EdgeInsets.only(
-                                                          left: width * 0.08,
-                                                          bottom: height * 0.023,
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: width * 1.15,
+                                                          child: TextField(
+                                                            controller:
+                                                            dashboardController
+                                                                .editTopicC,
+                                                            style: TextStyle(
+                                                              fontFamily: "sfPro",
+                                                              color: Colors.black
+                                                                  .withOpacity(0.8),
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                            decoration: InputDecoration(
+                                                              border: InputBorder.none,
+                                                              contentPadding:
+                                                              EdgeInsets.only(
+                                                                left: width * 0.08,
+                                                                bottom: height * 0.023,
+                                                              ),
+                                                              hintStyle: TextStyle(
+                                                                fontFamily: "sfPro",
+                                                                color: Colors.black
+                                                                    .withOpacity(0.6),
+                                                                fontWeight:
+                                                                FontWeight.w500,
+                                                              ),
+                                                              hintText: 'Add Topic...',
+                                                            ),
+                                                          ),
                                                         ),
-                                                        hintStyle: TextStyle(
-                                                          fontFamily: "sfPro",
-                                                          color: Colors.black
-                                                              .withOpacity(0.6),
-                                                          fontWeight:
-                                                          FontWeight.w500,
-                                                        ),
-                                                        hintText: 'Add Topic...',
-                                                      ),
+                                                        SizedBox(
+                                                            child: Image.asset(AssetRes.edit,height: 20,width: 20,color: Colors.black.withOpacity(0.8),)),
+                                                      ],
                                                     ),
                                                     Container(
                                                       margin: EdgeInsets.symmetric(
                                                           horizontal: 10),
+                                                      padding: EdgeInsets.all(10),
                                                       height: height * 0.15,
                                                       width: width * 1.3,
                                                       decoration: BoxDecoration(
@@ -554,34 +601,45 @@ class NewsScreen extends StatelessWidget {
                                                             ColorRes.appColor,
                                                             width: border),
                                                       ),
-                                                      child: TextField(
-                                                        controller:
-                                                        dashboardController
-                                                            .editDesC,
-                                                        style: TextStyle(
-                                                          fontFamily: "sfPro",
-                                                          color: Colors.black
-                                                              .withOpacity(0.8),
-                                                          fontWeight:
-                                                          FontWeight.w500,
-                                                        ),
-                                                        decoration: InputDecoration(
-                                                          border: InputBorder.none,
-                                                          contentPadding:
-                                                          EdgeInsets.only(
-                                                            left: width * 0.08,
-                                                            bottom: height * 0.023,
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                                        children: [
+                                                          SizedBox(
+                                                            width : width * 0.94,
+                                                            child: TextField(
+                                                              maxLines: 10,
+                                                              controller:
+                                                              dashboardController
+                                                                  .editDesC,
+                                                              style: TextStyle(
+                                                                fontFamily: "sfPro",
+                                                                color: Colors.black
+                                                                    .withOpacity(0.8),
+                                                                fontWeight:
+                                                                FontWeight.w500,
+                                                              ),
+                                                              decoration: InputDecoration(
+                                                                border: InputBorder.none,
+                                                                contentPadding:
+                                                                EdgeInsets.only(
+                                                                  left: width * 0.08,
+                                                                  bottom: height * 0.023,
+                                                                ),
+                                                                hintStyle: TextStyle(
+                                                                  fontFamily: "sfPro",
+                                                                  color: Colors.black
+                                                                      .withOpacity(0.6),
+                                                                  fontWeight:
+                                                                  FontWeight.w500,
+                                                                ),
+                                                                hintText:
+                                                                'Add description here..',
+                                                              ),
+                                                            ),
                                                           ),
-                                                          hintStyle: TextStyle(
-                                                            fontFamily: "sfPro",
-                                                            color: Colors.black
-                                                                .withOpacity(0.6),
-                                                            fontWeight:
-                                                            FontWeight.w500,
-                                                          ),
-                                                          hintText:
-                                                          'Add description here..',
-                                                        ),
+                                                          SizedBox(
+                                                              child: Image.asset(AssetRes.edit,height: 20,width: 20,color: Colors.black.withOpacity(0.8),)),
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
@@ -594,6 +652,15 @@ class NewsScreen extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             onTap: () {
+
+                                              dashboardController.headline = dashboardController.editHeadlineC.text;
+                                              dashboardController.description = dashboardController.editDesC.text;
+                                              dashboardController.time = dashboardController.editTimeC.text;
+                                              dashboardController.topic = dashboardController.editTopicC.text;
+                                              dashboardController.date = dashboardController.editDateC.text;
+                                              dashboardController.state = dashboardController.editStateC.text;
+                                              dashboardController.city = dashboardController.editCityC.text;
+                                              dashboardController.channel = dashboardController.editChannelC.text;
 
                                               Get.back();
                                               dashboardController.update(['dash']);
@@ -958,6 +1025,7 @@ class NewsScreen extends StatelessWidget {
                                                   width: border),
                                             ),
                                             child: TextField(
+
                                               controller: dashboardController
                                                   .addHeadLineController,
                                               style: TextStyle(
@@ -1266,6 +1334,7 @@ class NewsScreen extends StatelessWidget {
                                                         width: border),
                                                   ),
                                                   child: TextField(
+                                                    maxLines: 6,
                                                     controller:
                                                         dashboardController
                                                             .desController,
@@ -1306,19 +1375,37 @@ class NewsScreen extends StatelessWidget {
                                       GestureDetector(
                                         onTap: () {
 
-                                          dashboardController.isNewsAdded =
-                                              true;
-                                          dashboardController.headline = dashboardController.addHeadLineController.text;
-                                          dashboardController.channel = dashboardController.channelController.text;
-                                          dashboardController.city = dashboardController.cityController.text;
-                                          dashboardController.date = dashboardController.dateController.text;
-                                          dashboardController.time = dashboardController.timeController.text;
-                                          dashboardController.topic = dashboardController.topicController.text;
-                                          dashboardController.description = dashboardController.desController.text;
-                                          dashboardController.newsImage = dashboardController.imageData;
-
+                                    //       if(         dashboardController.addHeadLineController.text.isNotEmpty &&
+                                    //        dashboardController.channelController.text.isNotEmpty&&
+                                    //      dashboardController.cityController.text.isNotEmpty &&
+                                    //     dashboardController.dateController.text.isNotEmpty&&
+                                    //        dashboardController.timeController.text.isNotEmpty &&
+                                    //       dashboardController.topicController.text.isNotEmpty&&
+                                    //  dashboardController.desController.text.isNotEmpty &&
+                                    // dashboardController.imageData!= null){
+                                    //
+                                    //         dashboardController.isNewsAdded =
+                                    //         true;
+                                    //         dashboardController.headline = dashboardController.addHeadLineController.text;
+                                    //         dashboardController.channel = dashboardController.channelController.text;
+                                    //         dashboardController.city = dashboardController.cityController.text;
+                                    //         dashboardController.date = dashboardController.dateController.text;
+                                    //         dashboardController.time = dashboardController.timeController.text;
+                                    //         dashboardController.topic = dashboardController.topicController.text;
+                                    //         dashboardController.description = dashboardController.desController.text;
+                                    //         dashboardController.newsImage = dashboardController.imageData;
+                                    //
+                                    //         Get.back();
+                                    //         dashboardController.update(['dash']);
+                                    //       }
+                                    //       else {
+                                    //         Get.snackbar('Error', 'Please enter all fields');
+                                    //       }
+                                                  dashboardController.isNewsAdded =
+                                                  true;
                                           Get.back();
                                           dashboardController.update(['dash']);
+
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(

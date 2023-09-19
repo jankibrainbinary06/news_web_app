@@ -76,6 +76,7 @@ class CategoryScreen extends StatelessWidget {
                                   onTap: () {
                                     dashboardController.isTapCategory = false;
                                     dashboardController.update(['dash']);
+
                                   },
                                   child: Icon(
                                     Icons.arrow_back_sharp,
@@ -900,10 +901,13 @@ class CategoryScreen extends StatelessWidget {
                                                                               DateTime.now(),
                                                                         });
                                                                       }
-
+                                                                      dashboardController.isCategory = false;
+                                                                      dashboardController.isNews = true;
+                                                                  dashboardController.isNewsCategory = false ;
                                                                       Get.back();
-                                                                      dashboardController
-                                                                          .update();
+
+                                                                   dashboardController
+                                                                          .update(['dash']);
                                                                     },
                                                                     child:
                                                                         Container(

@@ -35,18 +35,16 @@ class DashboardController extends GetxController {
   bool isLogout = false;
   bool isTapCategory = false;
   bool isNewsAdded = false;
-  bool isNewsCategory = true ;
+  bool isNewsCategory = true;
 
-String? headline = 'hgh';
-String? channel = 'gfh';
-String? date = 'gh';
-String?time  = 'hgf';
-String? state = 'ghghfdg';
-String?  city= 'ghh';
-String?  topic= 'fggggggggggggggggh';
-String?  description= 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddgh';
-
-
+String? headline = '';
+String? channel = '';
+String? date = '';
+String?time  = '';
+String? state = '';
+String?  city= '';
+String?  topic= '';
+String?  description= '';
 
   PlatformFile? imageFile;
   List<Uint8List> imagesPath = [];
