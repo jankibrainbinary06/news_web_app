@@ -4,14 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController {
-
-
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextEditingController categoryController = TextEditingController();
   TextEditingController subCategoryController = TextEditingController();
   TextEditingController editCategoryController = TextEditingController();
   TextEditingController addHeadLineController = TextEditingController();
+
+  List categoryList = [];
+  int idindex = 0;
   TextEditingController channelController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController stateController = TextEditingController();
