@@ -24,8 +24,6 @@ class CategoryScreen extends StatelessWidget {
     double border = 0;
     bool isMobile = false;
 
-    String document = "";
-
     CollectionReference Users =
         FirebaseFirestore.instance.collection('categories');
 
@@ -122,6 +120,7 @@ class CategoryScreen extends StatelessWidget {
                           ),
                         ),
                         dashboardController.isTapCategory
+                            // single category
                             ? GestureDetector(
                                 onTap: () {
                                   dashboardController.categoryController
@@ -263,247 +262,28 @@ class CategoryScreen extends StatelessWidget {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () async {
-                                                    // main category add
+                                                    if (dashboardController
+                                                        .subCategoryController
+                                                        .text
+                                                        .isNotEmpty) {
+                                                      await Users.doc(snapshot
+                                                              .data!
+                                                              .docs[
+                                                                  dashboardController
+                                                                      .idindex]
+                                                              .id)
+                                                          .update({
+                                                        "subcategory": [
+                                                          dashboardController
+                                                              .subCategoryController
+                                                              .text,
+                                                        ],
+                                                        "DateTime":
+                                                            DateTime.now(),
+                                                      });
+                                                    }
 
                                                     Get.back();
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return BackdropFilter(
-                                                          filter:
-                                                              ImageFilter.blur(
-                                                                  sigmaX: 2,
-                                                                  sigmaY: 2),
-                                                          child: Dialog(
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            child: Container(
-                                                              height:
-                                                                  height * 0.55,
-                                                              width: width * 2,
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .symmetric(
-                                                                vertical: 10,
-                                                                horizontal: 10,
-                                                              ),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                border:
-                                                                    Border.all(
-                                                                  color: ColorRes
-                                                                      .appColor,
-                                                                  width: 1,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                  5,
-                                                                ),
-                                                              ),
-                                                              child: Column(
-                                                                children: [
-                                                                  const SizedBox(
-                                                                    height: 2,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .end,
-                                                                    children: [
-                                                                      GestureDetector(
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .close,
-                                                                          color: Colors
-                                                                              .black
-                                                                              .withOpacity(0.8),
-                                                                          size:
-                                                                              20,
-                                                                        ),
-                                                                        onTap:
-                                                                            () {
-                                                                          Get.back();
-                                                                        },
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  Text(
-                                                                    'Sports',
-                                                                    style: TextStyle(
-                                                                        height:
-                                                                            1.5,
-                                                                        color: Colors
-                                                                            .black
-                                                                            .withOpacity(
-                                                                                0.8),
-                                                                        fontWeight: FontWeight
-                                                                            .w600,
-                                                                        fontSize: textHeight *
-                                                                            0.04,
-                                                                        fontFamily:
-                                                                            "sfPro",
-                                                                        letterSpacing:
-                                                                            2),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: Get
-                                                                            .height *
-                                                                        0.008,
-                                                                  ),
-                                                                  Container(
-                                                                    height: 1,
-                                                                    width:
-                                                                        width *
-                                                                            0.8,
-                                                                    color: ColorRes
-                                                                        .appColor,
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height:
-                                                                        Get.height *
-                                                                            0.04,
-                                                                  ),
-                                                                  Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        height: Get.height *
-                                                                            0.02,
-                                                                      ),
-                                                                      Container(
-                                                                        height: height *
-                                                                            0.06,
-                                                                        width: width *
-                                                                            1.3,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color: ColorRes
-                                                                              .appColor
-                                                                              .withOpacity(0.1),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(
-                                                                            5,
-                                                                          ),
-                                                                          border: Border.all(
-                                                                              color: ColorRes.appColor,
-                                                                              width: border),
-                                                                        ),
-                                                                        child:
-                                                                            TextField(
-                                                                          controller:
-                                                                              dashboardController.subCategoryController,
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontFamily:
-                                                                                "sfPro",
-                                                                            color:
-                                                                                Colors.black.withOpacity(0.8),
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                          ),
-                                                                          decoration:
-                                                                              InputDecoration(
-                                                                            border:
-                                                                                InputBorder.none,
-                                                                            contentPadding:
-                                                                                EdgeInsets.only(
-                                                                              left: width * 0.08,
-                                                                              bottom: height * 0.023,
-                                                                            ),
-                                                                            hintStyle:
-                                                                                TextStyle(
-                                                                              fontFamily: "sfPro",
-                                                                              color: Colors.black.withOpacity(0.6),
-                                                                              fontWeight: FontWeight.w500,
-                                                                            ),
-                                                                            hintText:
-                                                                                'Add sport sub category',
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height:
-                                                                        Get.height *
-                                                                            0.05,
-                                                                  ),
-                                                                  GestureDetector(
-                                                                    onTap:
-                                                                        () async {
-                                                                      if (dashboardController
-                                                                          .subCategoryController
-                                                                          .text
-                                                                          .isNotEmpty) {
-                                                                        await Users
-                                                                            .add({
-                                                                          "category": dashboardController
-                                                                              .categoryController
-                                                                              .text,
-                                                                          "subcategory":
-                                                                              [
-                                                                            dashboardController.subCategoryController.text,
-                                                                          ],
-                                                                          "DateTime":
-                                                                              DateTime.now(),
-                                                                        });
-                                                                      }
-
-                                                                      Get.back();
-                                                                      dashboardController
-                                                                          .update();
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: ColorRes
-                                                                            .appColor,
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                          5,
-                                                                        ),
-                                                                      ),
-                                                                      width:
-                                                                          width *
-                                                                              0.7,
-                                                                      height:
-                                                                          height *
-                                                                              0.07,
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      child:
-                                                                          Text(
-                                                                        "Add News",
-                                                                        style: TextStyle(
-                                                                            fontSize: height *
-                                                                                0.025,
-                                                                            fontWeight:
-                                                                                FontWeight.w600,
-                                                                            color: Colors.white),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height:
-                                                                        height *
-                                                                            0.02,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
                                                     dashboardController
                                                         .update(['dash']);
                                                   },
@@ -903,7 +683,9 @@ class CategoryScreen extends StatelessWidget {
 
                                                                       Get.back();
                                                                       dashboardController
-                                                                          .update();
+                                                                          .update([
+                                                                        'dash'
+                                                                      ]);
                                                                     },
                                                                     child:
                                                                         Container(
@@ -966,11 +748,12 @@ class CategoryScreen extends StatelessWidget {
                                                     child: Text(
                                                       "Next",
                                                       style: TextStyle(
-                                                          fontSize:
-                                                              height * 0.025,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.white),
+                                                        fontSize:
+                                                            height * 0.025,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -1579,7 +1362,6 @@ class CategoryScreen extends StatelessWidget {
                                     itemBuilder: (context, index) {
                                       Map data = snapshot.data!.docs[index]
                                           .data() as Map<String, dynamic>;
-                                      document = snapshot.data!.docs[index].id;
 
                                       return SizedBox(
                                         child: Row(
@@ -1587,6 +1369,8 @@ class CategoryScreen extends StatelessWidget {
                                             Expanded(
                                               child: GestureDetector(
                                                 onTap: () {
+                                                  dashboardController.idindex =
+                                                      index;
                                                   dashboardController
                                                       .isTapCategory = true;
                                                   dashboardController
@@ -1790,8 +1574,10 @@ class CategoryScreen extends StatelessWidget {
                                                                 GestureDetector(
                                                                   onTap:
                                                                       () async {
-                                                                    await Users.doc(
-                                                                            "${snapshot.data!.docs[index].id}")
+                                                                    await Users.doc(snapshot
+                                                                            .data!
+                                                                            .docs[dashboardController.idindex]
+                                                                            .id)
                                                                         .update({
                                                                       "category": dashboardController
                                                                           .editCategoryController
@@ -2004,8 +1790,10 @@ class CategoryScreen extends StatelessWidget {
                                                                 GestureDetector(
                                                                   onTap:
                                                                       () async {
-                                                                    await Users.doc(
-                                                                            "${snapshot.data!.docs[index].id}")
+                                                                    await Users.doc(snapshot
+                                                                            .data!
+                                                                            .docs[dashboardController.idindex]
+                                                                            .id)
                                                                         .delete();
                                                                     Get.back();
                                                                     dashboardController
