@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_web_app/screens/category_screen/category_screen.dart';
 import 'package:news_web_app/screens/dashboard_screen/dashboard_screen.dart';
 
 Future<void> main() async {

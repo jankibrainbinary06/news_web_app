@@ -120,7 +120,6 @@ class CategoryScreen extends StatelessWidget {
                           ),
                         ),
                         dashboardController.isTapCategory
-                            // single category
                             ? GestureDetector(
                                 onTap: () {
                                   dashboardController.categoryController
@@ -680,7 +679,9 @@ class CategoryScreen extends StatelessWidget {
                                                                               DateTime.now(),
                                                                         });
                                                                       }
-
+                                                                      dashboardController.isCategory = false;
+                                                                      dashboardController.isNews = true;
+                                                                  dashboardController.isNewsCategory = false ;
                                                                       Get.back();
                                                                       dashboardController
                                                                           .update([
