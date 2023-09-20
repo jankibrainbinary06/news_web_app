@@ -2,21 +2,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:news_web_app/screens/category_screen/category_screen.dart';
 import 'package:news_web_app/screens/dashboard_screen/dashboard_screen.dart';
-import 'package:news_web_app/screens/login_screen/login_screen.dart';
-
-import 'demo.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyBN99PGFY_ljd3I0tWezTP866UEQLtn7LY",
-            appId: "1:700407648138:web:bed5eb5ff00d4b38318273",
-            messagingSenderId: "700407648138",
-            projectId: "news-app-8a54c"));
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyAZXMNJlaiaJq2hjc_bD8jz2j9FL8XzNaE",
+        appId: "1:412875739905:web:e0d2e01f4fd678e5104100",
+        messagingSenderId: "412875739905",
+        projectId: "news-app-c50bf",
+      ),
+    );
   }
   runApp(const MyApp());
 }
