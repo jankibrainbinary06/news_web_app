@@ -58,6 +58,7 @@ String?  description= '';
 
   Uint8List? imageData ;
   Uint8List? newsImage;
+  FilePickerResult? result;
 
 
   List? dropValue = List.generate(9, (index) => 'Male');
@@ -74,22 +75,22 @@ String?  description= '';
 
 
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
+     result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowMultiple: false,
-        allowedExtensions: ['jpg', 'png', 'webp', 'jpeg'],
+        allowedExtensions: ['jpg', 'png', 'webp', 'jpeg','mp4'],
       );
 
       if (result == null) return;
 
-       imageData = result.files.first.bytes;
+       imageData = result!.files.first.bytes;
 
-        imageFile = result.files.first;
-        result.files.forEach((element) {
+        imageFile = result!.files.first;
+        result!.files.forEach((element) {
           if (element.extension == 'jpg' ||
               element.extension == 'png' ||
               element.extension == 'jpeg' ||
-              element.extension == 'webp') {
+              element.extension == 'webp'|| element.extension == 'mp4') {
             imagesPath.add(element.bytes!);
           }
         });

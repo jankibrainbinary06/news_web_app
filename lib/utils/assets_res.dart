@@ -8,6 +8,7 @@ class AssetRes{
 
   static  const background = '${image}bg.png';
   static  const imagePicker = '${image}image_picker.png';
+  static  const videoThumbnail = '${image}video_thumbnail.jpg';
 
   //--icons
 

@@ -1321,123 +1321,125 @@ class NewsScreen extends StatelessWidget {
                               ],
                             )
                           : dashboardController.isNewsAdded
-                              ? Column(
-                                  children: [
-                                    Text(
-                                      dashboardController.headline!,
-                                      style: mediumSf.copyWith(
-                                          fontSize: 27,
-                                          fontWeight: FontWeight.w700),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.035,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          dashboardController.channel!,
-                                          style:
-                                              mediumSf.copyWith(fontSize: 20),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          dashboardController.city!,
-                                          style:
-                                              mediumSf.copyWith(fontSize: 20),
-                                        ),
-                                        Text(
-                                          dashboardController.date!,
-                                          style:
-                                              mediumSf.copyWith(fontSize: 20),
-                                        ),
-                                        Text(
-                                          dashboardController.time!,
-                                          style:
-                                              mediumSf.copyWith(fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.035,
-                                    ),
-                                    dashboardController.newsImage == null
-                                        ? SizedBox()
-                                        : Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                5,
+                              ? SingleChildScrollView(
+                                child: Column(
+                                    children: [
+                                      Text(
+                                        dashboardController.headline!,
+                                        style: mediumSf.copyWith(
+                                            fontSize: 27,
+                                            fontWeight: FontWeight.w700),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.035,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            dashboardController.channel!,
+                                            style:
+                                                mediumSf.copyWith(fontSize: 20),
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            dashboardController.city!,
+                                            style:
+                                                mediumSf.copyWith(fontSize: 20),
+                                          ),
+                                          Text(
+                                            dashboardController.date!,
+                                            style:
+                                                mediumSf.copyWith(fontSize: 20),
+                                          ),
+                                          Text(
+                                            dashboardController.time!,
+                                            style:
+                                                mediumSf.copyWith(fontSize: 20),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.035,
+                                      ),
+                                      dashboardController.newsImage == null
+                                          ? SizedBox()
+                                          : Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  5,
+                                                ),
+                                                border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 1),
                                               ),
-                                              border: Border.all(
-                                                  color: Colors.white,
-                                                  width: 1),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  5,
+                                                ),
+                                                child: Image.memory(
+                                                  Uint8List.fromList(
+                                                      dashboardController
+                                                          .newsImage!),
+                                                  width: width * 25,
+                                                  height:
+                                                      sizingInformation.isDesktop
+                                                          ? height * 0.5
+                                                          : height * 0.34,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                5,
-                                              ),
-                                              child: Image.memory(
-                                                Uint8List.fromList(
-                                                    dashboardController
-                                                        .newsImage!),
-                                                width: width * 25,
-                                                height:
-                                                    sizingInformation.isDesktop
-                                                        ? height * 0.5
-                                                        : height * 0.34,
-                                                fit: BoxFit.cover,
-                                              ),
+                                      SizedBox(
+                                        height: Get.height * 0.025,
+                                      ),
+                                      Text(
+                                        dashboardController.topic!,
+                                        style: mediumSf.copyWith(
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.025,
+                                      ),
+                                      Text(
+                                        dashboardController.description!,
+                                        style: mediumSf.copyWith(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      SizedBox(height: 10,),
+                                      GestureDetector(
+                                        onTap: () {
+                                          dashboardController.isNewsCategory =
+                                              true;
+                                          dashboardController.isNewsAdded = false;
+                                          dashboardController.update(['dash']);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: ColorRes.appColor,
+                                            borderRadius: BorderRadius.circular(
+                                              5,
                                             ),
                                           ),
-                                    SizedBox(
-                                      height: Get.height * 0.025,
-                                    ),
-                                    Text(
-                                      dashboardController.topic!,
-                                      style: mediumSf.copyWith(
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    SizedBox(
-                                      height: Get.height * 0.025,
-                                    ),
-                                    Text(
-                                      dashboardController.description!,
-                                      style: mediumSf.copyWith(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Spacer(),
-                                    GestureDetector(
-                                      onTap: () {
-                                        dashboardController.isNewsCategory =
-                                            true;
-                                        dashboardController.isNewsAdded = false;
-                                        dashboardController.update(['dash']);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: ColorRes.appColor,
-                                          borderRadius: BorderRadius.circular(
-                                            5,
+                                          width: width * 0.7,
+                                          height: height * 0.07,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            "Upload",
+                                            style: TextStyle(
+                                                fontSize: height * 0.025,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white),
                                           ),
-                                        ),
-                                        width: width * 0.7,
-                                        height: height * 0.07,
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Upload",
-                                          style: TextStyle(
-                                              fontSize: height * 0.025,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                )
+                                    ],
+                                  ),
+                              )
                               : GestureDetector(
                                   onTap: () {
                                     showDialog(
@@ -1631,8 +1633,8 @@ class NewsScreen extends StatelessWidget {
                                                                             .circular(
                                                                       10,
                                                                     ),
-                                                                    child: Image
-                                                                        .memory(
+                                                                    child: dashboardController.result!.files.first.extension!= 'mp4'?
+                                                                        Image.memory(
                                                                       Uint8List.fromList(
                                                                           dashboardController
                                                                               .imageData!),
@@ -1647,7 +1649,7 @@ class NewsScreen extends StatelessWidget {
                                                                               0.14,
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                    ),
+                                                                    ): Image.asset(AssetRes.videoThumbnail),
                                                                   ),
                                                                 ),
                                                           SizedBox(),
