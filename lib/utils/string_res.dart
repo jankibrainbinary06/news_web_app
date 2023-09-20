@@ -5,5 +5,4 @@ class Strings {
   static const again = "Again!";
   static const welcomeBack = "Welcome back";
   static const category = "Categories";
-  static const news = "News";
 }

@@ -7,7 +7,6 @@ class AssetRes{
   //--images
 
   static  const background = '${image}bg.png';
-  static  const imagePicker = '${image}image_picker.png';
 
   //--icons
 
@@ -19,6 +18,5 @@ class AssetRes{
   static  const edit = '${icon}edit.png';
   static  const news = '${icon}news.png';
   static  const add = '${icon}add.png';
-  static  const arrowDown = '${icon}arrowDown.png';
 
 }
